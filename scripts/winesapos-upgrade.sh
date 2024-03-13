@@ -965,6 +965,15 @@ fi
 sudo -E -u ${WINESAPOS_USER_NAME} ${qdbus_cmd} ${kdialog_dbus} /ProgressDialog org.kde.kdialog.ProgressDialog.close
 echo "Running 3.4.0 to 4.0.0 upgrades complete."
 
+echo "Running 4.0.0 to 4.1.0 upgrades..."
+
+${CMD_PACMAN} -Q packagekit-qt6
+if [ $? -ne 0 ]; then
+    ${CMD_PACMAN_INSTALL[*]} packagekit-qt6
+fi
+
+echo "Running 4.0.0 to 4.1.0 upgrades complete."
+
 echo "Upgrading system packages..."
 kdialog_dbus=$(sudo -E -u ${WINESAPOS_USER_NAME} kdialog --title "winesapOS Upgrade" --progressbar "Please wait for all system packages to upgrade (this can take a long time)..." 10 | cut -d" " -f1)
 sudo -E -u ${WINESAPOS_USER_NAME} ${qdbus_cmd} ${kdialog_dbus} /ProgressDialog showCancelButton false
